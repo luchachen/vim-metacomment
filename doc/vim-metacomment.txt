@@ -1,0 +1,54 @@
+*vim-metacomment* MetaComment: a tools that frames and centers a key comment
+
+
+===============================================================================
+Contents -
+
+1. What does this do?
+2. How to use it?
+3. How to configure it?
+
+===============================================================================
+                                            *vim-metacomment-what-does-this-do*
+What does this do? -
+
+To highlight the comment ‘‘Public API’’ in your source code, vim-metacomment
+will create:
+
+>
+/*============================================================================*
+ *                                 Public API                                 *
+ *============================================================================*/
+ <
+
+This frame is by default, and can be configured.
+
+
+
+===============================================================================
+                                                *vim-metacomment-how-to-use-it*
+How to use it?
+
+In command mode, call:
+
+>
+   :MetaComment
+<
+
+Then type your comment and validates with ENTER. Easy!
+
+
+===============================================================================
+                                          *vim-metacomment-how-to-configure-it*
+How to configure it?
+
+Set the options below:
+
+>
+let g:MetaComment_header = "============================================================================*"
+let g:MetaComment_right = "*"
+let g:MetaComment_left = "*"
+let g:MetaComment_footer = "*============================================================================"
+<
+
+vim ft=help

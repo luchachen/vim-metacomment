@@ -23,7 +23,7 @@ Default configuration:
 let g:MetaComment_header = "============================================================================*"
 let g:MetaComment_right = "*"
 let g:MetaComment_left = "*"
-let g:MetaComment_footer = "============================================================================="
+let g:MetaComment_footer = "*============================================================================"
 ```
 
 generates:

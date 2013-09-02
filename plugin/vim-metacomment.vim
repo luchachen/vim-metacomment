@@ -42,7 +42,7 @@ if !exists("g:MetaComment_left")
 endif
 
 if !exists("g:MetaComment_footer")
-   let g:MetaComment_footer = "============================================================================="
+   let g:MetaComment_footer = "*============================================================================"
 endif
 
 
