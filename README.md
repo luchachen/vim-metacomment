@@ -1,16 +1,20 @@
 vim-metacomment
 ===============
 
-Usage
------
+# Usage
 
-* `:MetaComment` then press `Enter`
-* type the comment (less than 76 characters)
-* press `Enter`
+* `:MetaComment My wonderful comment` then press `Enter`
+* The comment must be less than 76 characters
 
 
-Configuration
--------------
+# Installation with Vundle
+
+* Get vundle here https://github.com/gmarik/vundle
+* Add in your `$HOME/.vimrc`: `Bundle 'jeanguyomarch/vim-metacomment'`
+* Re-run vim and call `:BundleInstall`
+
+
+# Configuration
 
 * `let g:MetaComment_header = "your header here"`
 * `let g:MetaComment_right = "right symbol here"`
