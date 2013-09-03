@@ -28,7 +28,6 @@ In command mode, call:
    :MetaComment Your wonderful comment
 <
 Then validates with ENTER. Easy!
-If you forgot to type the comment, it will be prompted.
 
 ===============================================================================
 How to configure it?
