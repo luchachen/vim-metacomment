@@ -79,13 +79,11 @@ endfunction
 " -------------------------
 " Public API Implementation
 " -------------------------
-function! <SID>MetaComment()
-
-   let g:MetaComment = input("Comment: ")
+function! s:MetaComment(str)
 
    exec "normal i/*" . g:MetaComment_header
    exec "normal o"
-   exec "normal 0d$i " . g:MetaComment_left . StringWithWhiteSpaces(g:MetaComment) . g:MetaComment_right
+   exec "normal 0d$i " . g:MetaComment_left . StringWithWhiteSpaces(a:str) . g:MetaComment_right
    exec "normal o"
    exec "normal 0d$i " . g:MetaComment_footer . "*/"
 
@@ -94,6 +92,6 @@ endfunction
 " ----------
 " Public API
 " ----------
-command! -nargs=0 MetaComment :call <SID>MetaComment()
+command! -nargs=1 MetaComment call s:MetaComment(<f-args>)
 
 " EOF

@@ -1,54 +1,56 @@
 *vim-metacomment* MetaComment: a tools that frames and centers a key comment
 
-
 ===============================================================================
 Contents -
 
 1. What does this do?
 2. How to use it?
 3. How to configure it?
+4. Configuration example
 
 ===============================================================================
-                                            *vim-metacomment-what-does-this-do*
-What does this do? -
+ What does this do?
 
 To highlight the comment ‘‘Public API’’ in your source code, vim-metacomment
-will create:
-
+will create (the width is 80 columns):
 >
-/*============================================================================*
- *                                 Public API                                 *
- *============================================================================*/
- <
-
+   /*============================================================================*
+    *                                 Public API                                 *
+    *============================================================================*/
+<
 This frame is by default, and can be configured.
 
-
-
 ===============================================================================
-                                                *vim-metacomment-how-to-use-it*
 How to use it?
 
 In command mode, call:
-
 >
-   :MetaComment
+   :MetaComment Your wonderful comment
 <
-
-Then type your comment and validates with ENTER. Easy!
-
+Then validates with ENTER. Easy!
+If you forgot to type the comment, it will be prompted.
 
 ===============================================================================
-                                          *vim-metacomment-how-to-configure-it*
 How to configure it?
 
 Set the options below:
-
 >
-let g:MetaComment_header = "============================================================================*"
-let g:MetaComment_right = "*"
-let g:MetaComment_left = "*"
-let g:MetaComment_footer = "*============================================================================"
+   let g:MetaComment_header = "============================================================================*"
+   let g:MetaComment_right = "*"
+   let g:MetaComment_left = "*"
+   let g:MetaComment_footer = "*============================================================================"
 <
+===============================================================================
+Configuration example
 
-vim ft=help
+let g:MetaComment_header = "~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=#"
+let g:MetaComment_right = "]"
+let g:MetaComment_left = "$"
+let g:MetaComment_footer = "#=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~"
+
+Produces:
+
+/*~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=#
+ $                                 My comment                                 ]
+ #=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~*/
+
