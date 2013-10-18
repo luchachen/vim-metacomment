@@ -37,15 +37,18 @@ of using the default C comment style (/**/)
 
 Specific commands exist to force a comment style. It is used the same way as :MetaComment
 
-*------------*----------*-------------------*
-| Class Name | Comments |      Command      |
-*------------*----------*-------------------*
-|    c       |   /* */  | :MetaCommentC     |
-|    cpp     |   //     | :MetaCommentCpp   |
-|    sh      |   #      | :MetaCommentSh    |
-|    asm     |   ;      | :MetaCommentAsm   |
-|    vim     |   "      | :MetaCommentVim   |
-*------------*----------*-------------------*
+*------------*------------*-------------------*
+| Class Name | Comments   |      Command      |
+*------------*------------*-------------------*
+|    c       |   /* */    | :MetaCommentC     |
+|    cpp     |   //       | :MetaCommentCpp   |
+|    sh      |   #        | :MetaCommentSh    |
+|    asm     |   ;        | :MetaCommentAsm   |
+|    vim     |   "        | :MetaCommentVim   |
+|    vhdl    |   --       | :MetaCommentVhdl  |
+|    latex   |   %        | :MetaCommentLaTeX |
+|    html    |   <!-- --> | :MetaCommentHtml  |
+*------------*------------*-------------------*
 
 ===============================================================================
 How to configure it?

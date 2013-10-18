@@ -66,56 +66,105 @@ endif
 
 " Shell/Python/Ruby (type #)
 if !exists("g:MetaComment_header_sh")
-   let g:MetaComment_header_sh = "============================================================================#"
+   let g:MetaComment_header_sh = "==============================================================================#"
 endif
 
 if !exists("g:MetaComment_right_sh")
-   let g:MetaComment_right_sh = "#"
+   let g:MetaComment_right_sh = " #"
 endif
 
 if !exists("g:MetaComment_left_sh")
-   let g:MetaComment_left_sh = ""
+   let g:MetaComment_left_sh = " "
 endif
 
 if !exists("g:MetaComment_footer_sh")
-   let g:MetaComment_footer_sh = "============================================================================#"
+   let g:MetaComment_footer_sh = "==============================================================================#"
 endif
 
 " Assembler (type ;)
 if !exists("g:MetaComment_header_asm")
-   let g:MetaComment_header_asm = " -------------------------------------------------------------------------- ;"
+   let g:MetaComment_header_asm = " ---------------------------------------------------------------------------- ;"
 endif
 
 if !exists("g:MetaComment_right_asm")
-   let g:MetaComment_right_asm = ";"
+   let g:MetaComment_right_asm = " ;"
 endif
 
 if !exists("g:MetaComment_left_asm")
-   let g:MetaComment_left_asm = ""
+   let g:MetaComment_left_asm = " "
 endif
 
 if !exists("g:MetaComment_footer_asm")
-   let g:MetaComment_footer_asm = " -------------------------------------------------------------------------- ;"
+   let g:MetaComment_footer_asm = " ---------------------------------------------------------------------------- ;"
 endif
 
 " Vimscript (type ")
 if !exists("g:MetaComment_header_vim")
-   let g:MetaComment_header_vim = " -------------------------------------------------------------------------- \""
+   let g:MetaComment_header_vim = " ---------------------------------------------------------------------------- \""
 endif
 
 if !exists("g:MetaComment_right_vim")
-   let g:MetaComment_right_vim = "\""
+   let g:MetaComment_right_vim = " \""
 endif
 
 if !exists("g:MetaComment_left_vim")
-   let g:MetaComment_left_vim = ""
+   let g:MetaComment_left_vim = " "
 endif
 
 if !exists("g:MetaComment_footer_vim")
-   let g:MetaComment_footer_vim = " -------------------------------------------------------------------------- \""
+   let g:MetaComment_footer_vim = " ---------------------------------------------------------------------------- \""
 endif
 
+" VHDL (tpye --)
+if !exists("g:MetaComment_header_vhdl")
+   let g:MetaComment_header_vhdl = " -------------------------------------------------------------------------- --"
+endif
 
+if !exists("g:MetaComment_right_vhdl")
+   let g:MetaComment_right_vhdl = "--"
+endif
+
+if !exists("g:MetaComment_left_vhdl")
+   let g:MetaComment_left_vhdl = ""
+endif
+
+if !exists("g:MetaComment_footer_vhdl")
+   let g:MetaComment_footer_vhdl = " -------------------------------------------------------------------------- --"
+endif
+
+" LaTeX (type %)
+if !exists("g:MetaComment_header_latex")
+   let g:MetaComment_header_latex = " ---------------------------------------------------------------------------- %"
+endif
+
+if !exists("g:MetaComment_right_latex")
+   let g:MetaComment_right_latex = " %"
+endif
+
+if !exists("g:MetaComment_left_latex")
+   let g:MetaComment_left_latex = " "
+endif
+
+if !exists("g:MetaComment_footer_latex")
+   let g:MetaComment_footer_latex = " ---------------------------------------------------------------------------- %"
+endif
+
+" HTML (type <!-- -->)
+if !exists("g:MetaComment_header_html")
+   let g:MetaComment_header_html = " ***************************************************************************"
+endif
+
+if !exists("g:MetaComment_right_html")
+   let g:MetaComment_right_html = " *"
+endif
+
+if !exists("g:MetaComment_left_html")
+   let g:MetaComment_left_html = "*"
+endif
+
+if !exists("g:MetaComment_footer_html")
+   let g:MetaComment_footer_html = "*************************************************************************** "
+endif
 
 " -------------------------------------------------------------------------- "
 "                                 Private API                                "
@@ -192,6 +241,30 @@ function! s:MetaCommentVim(str)
       exec "normal 0d$i\"" . g:MetaComment_footer_vim
 endfunction
 
+function! s:MetaCommentVhdl(str)
+      exec "normal i--" . g:MetaComment_header_vhdl
+      exec "normal o"
+      exec "normal 0d$i--" . g:MetaComment_left_vhdl . StringWithWhiteSpaces(a:str) . g:MetaComment_right_vhdl
+      exec "normal o"
+      exec "normal 0d$i--" . g:MetaComment_footer_vhdl
+endfunction
+
+function! s:MetaCommentLaTeX(str)
+      exec "normal i%" . g:MetaComment_header_latex
+      exec "normal o"
+      exec "normal 0d$i%" . g:MetaComment_left_latex . StringWithWhiteSpaces(a:str) . g:MetaComment_right_latex
+      exec "normal o"
+      exec "normal 0d$i%" . g:MetaComment_footer_latex
+endfunction
+
+function! s:MetaCommentHtml(str)
+      exec "normal i<!--" . g:MetaComment_header_html
+      exec "normal o"
+      exec "normal 0d$i " . g:MetaComment_left_html . StringWithWhiteSpaces(a:str) . g:MetaComment_right_html
+      exec "normal o"
+      exec "normal 0d$i " . g:MetaComment_footer_html . "-->"
+endfunction
+
 " -------------------------------------------------------------------------- "
 "                              Main MetaComment                              "
 " -------------------------------------------------------------------------- "
@@ -199,7 +272,7 @@ endfunction
 function! s:MetaComment(str)
    let ft = &filetype
 
-   if ft == "c" || ft == "edc"
+   if ft == "c" || ft == "edc" || ft == "js" || ft == "php"
       call s:MetaCommentC(a:str)
    elseif ft == "cpp"
       call s:MetaCommentCpp(a:str)
@@ -209,6 +282,12 @@ function! s:MetaComment(str)
       call s:MetaCommentAsm(a:str)
    elseif ft == "vim"
       call s:MetaCommentVim(a:str)
+   elseif ft == "vhdl"
+      call s:MetaCommentVhdl(a:str)
+   elseif ft == "tex" || ft == "mat"
+      call s:MetaCommentLaTeX(a:str)
+   elseif ft == "html"
+      call s:MetaCommentHtml(a:str)
    else
       echoerr("Unimplemented filetype '" . ft . "'. Please report to jean.guyomarch@gmail.com or fix it yourself (but then please let me know)")
    endif
@@ -226,5 +305,8 @@ command! -nargs=1 MetaCommentCpp call s:MetaCommentCpp(<f-args>)
 command! -nargs=1 MetaCommentSh call s:MetaCommentSh(<f-args>)
 command! -nargs=1 MetaCommentAsm call s:MetaCommentAsm(<f-args>)
 command! -nargs=1 MetaCommentVim call s:MetaCommentVim(<f-args>)
+command! -nargs=1 MetaCommentVhdl call s:MetaCommentVhdl(<f-args>)
+command! -nargs=1 MetaCommentLaTeX call s:MetaCommentLaTeX(<f-args>)
+command! -nargs=1 MetaCommentHtml call s:MetaCommentHtml(<f-args>)
 
 " EOF
