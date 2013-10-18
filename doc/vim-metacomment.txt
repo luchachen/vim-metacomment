@@ -27,27 +27,53 @@ In command mode, call:
 >
    :MetaComment Your wonderful comment
 <
-Then validates with ENTER. Easy!
+Then validates with ENTER. Easy! This command autodetects the filetype.
+There is a comment style different for some filetypes. This is in place for a better
+customization in case by case.
+
+For some files, the filetype might not be correct. For instance a C header (.h) will
+be associated to a C++ header, and then the C++ comment style (//) will be applied instead
+of using the default C comment style (/**/)
+
+Specific commands exist to force a comment style. It is used the same way as :MetaComment
+
+*------------*----------*-------------------*
+| Class Name | Comments |      Command      |
+*------------*----------*-------------------*
+|    c       |   /* */  | :MetaCommentC     |
+|    cpp     |   //     | :MetaCommentCpp   |
+|    sh      |   #      | :MetaCommentSh    |
+|    asm     |   ;      | :MetaCommentAsm   |
+|    vim     |   "      | :MetaCommentVim   |
+*------------*----------*-------------------*
 
 ===============================================================================
 How to configure it?
 
 Set the options below:
 >
-   let g:MetaComment_header = "============================================================================*"
-   let g:MetaComment_right = "*"
-   let g:MetaComment_left = "*"
-   let g:MetaComment_footer = "*============================================================================"
+   let g:MetaComment_header_[type] = "============================================================================*"
+   let g:MetaComment_right_[type] = "*"
+   let g:MetaComment_left_[type] = "*"
+   let g:MetaComment_footer_[type] = "*============================================================================"
 <
+
+Replace [type] with the 'Class Name' corresponding to the type of comment
+(see table above).
+
 ===============================================================================
 Configuration example
 
-let g:MetaComment_header = "~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=#"
-let g:MetaComment_right = "]"
-let g:MetaComment_left = "$"
-let g:MetaComment_footer = "#=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~"
+let g:MetaComment_header_c = "~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=#"
+let g:MetaComment_right_c = "]"
+let g:MetaComment_left_c = "$"
+let g:MetaComment_footer_c = "#=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~"
 
-Produces:
+>
+   :MetaComment My comment
+<
+
+In a C file produces:
 
 /*~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=#
  $                                 My comment                                 ]
