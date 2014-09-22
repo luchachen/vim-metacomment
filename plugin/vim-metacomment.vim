@@ -276,7 +276,7 @@ function! s:MetaComment(str)
       call s:MetaCommentC(a:str)
    elseif ft == "cpp"
       call s:MetaCommentCpp(a:str)
-   elseif ft == "sh"
+   elseif ft == "sh" || ft == "bash" || ft == "zsh" || ft == "ruby" || ft == "python" || ft == "conf"
       call s:MetaCommentSh(a:str)
    elseif ft == "asm"
       call s:MetaCommentAsm(a:str)
