@@ -272,7 +272,7 @@ endfunction
 function! s:MetaComment(str)
    let ft = &filetype
 
-   if ft == "c" || ft == "edc" || ft == "js" || ft == "php" || ft="objc" || ft="objcpp"
+   if ft == "c" || ft == "edc" || ft == "js" || ft == "php" || ft == "objc" || ft == "objcpp"
       call s:MetaCommentC(a:str)
    elseif ft == "cpp"
       call s:MetaCommentCpp(a:str)
