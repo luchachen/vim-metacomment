@@ -4,8 +4,8 @@ vim-metacomment
 # Installation with Vundle
 
 * Get vundle here https://github.com/gmarik/vundle
-* Add in your `$HOME/.vimrc`: `Bundle 'jeanguyomarch/vim-metacomment'`
-* Re-run vim and call `:BundleInstall`
+* Add in your `$HOME/.vimrc`: `Plugin 'jeanguyomarch/vim-metacomment'`
+* Re-run vim and call `:PluginInstall`
 
 
 # Usage
@@ -18,7 +18,7 @@ License
 
 The MIT License (MIT)
 
-Copyright (c) 2013 - 2014 Jean Guyomarc'h
+Copyright (c) 2013 - 2015 Jean Guyomarc'h
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
