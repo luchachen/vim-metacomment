@@ -166,6 +166,23 @@ if !exists("g:MetaComment_footer_html")
    let g:MetaComment_footer_html = "*************************************************************************** "
 endif
 
+" Jinja (type {# #}
+if !exists("g:MetaComment_header_jinja")
+   let g:MetaComment_header_jinja = "#############################################################################"
+endif
+
+if !exists("g:MetaComment_right_jinja")
+   let g:MetaComment_right_jinja = "#"
+endif
+
+if !exists("g:MetaComment_left_jinja")
+   let g:MetaComment_left_jinja = "#"
+endif
+
+if !exists("g:MetaComment_footer_jinja")
+   let g:MetaComment_footer_jinja = "#############################################################################"
+endif
+
 " -------------------------------------------------------------------------- "
 "                                 Private API                                "
 " -------------------------------------------------------------------------- "
@@ -265,6 +282,16 @@ function! s:MetaCommentHtml(str)
       exec "normal 0d$i " . g:MetaComment_footer_html . "-->"
 endfunction
 
+function! s:MetaCommentJinja(str)
+      exec "normal i{#" . g:MetaComment_header_jinja
+      exec "normal o"
+      exec "normal 0d$i " . g:MetaComment_left_jinja . StringWithWhiteSpaces(a:str) . g:MetaComment_right_jinja
+      exec "normal o"
+      exec "normal 0d$i " . g:MetaComment_footer_jinja . "#}"
+endfunction
+
+
+
 " -------------------------------------------------------------------------- "
 "                              Main MetaComment                              "
 " -------------------------------------------------------------------------- "
@@ -288,6 +315,8 @@ function! s:MetaComment(str)
       call s:MetaCommentLaTeX(a:str)
    elseif ft == "html"
       call s:MetaCommentHtml(a:str)
+   elseif ft == "jinja"
+      call s:MetaCommentJinja(a:str)
    else
       echoerr("Unimplemented filetype '" . ft . "'. Please report to jean.guyomarch@gmail.com or fix it yourself (but then please let me know)")
    endif
