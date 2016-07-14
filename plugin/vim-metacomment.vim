@@ -4,7 +4,7 @@
 "
 " The MIT License (MIT)
 "
-" Copyright (c) 2013 Jean Guyomarc'h
+" Copyright (c) 2013-2016 Jean Guyomarc'h
 "
 " Permission is hereby granted, free of charge, to any person obtaining a copy
 " of this software and associated documentation files (the "Software"), to deal
@@ -318,7 +318,7 @@ function! s:MetaComment(str)
    elseif ft == "jinja"
       call s:MetaCommentJinja(a:str)
    else
-      echoerr("Unimplemented filetype '" . ft . "'. Please report to jean.guyomarch@gmail.com or fix it yourself (but then please let me know)")
+      echoerr("Unimplemented filetype '" . ft . "'. Please report to jean@guyomarch.bzh or fix it yourself (but then please let me know)")
    endif
 
 endfunction
