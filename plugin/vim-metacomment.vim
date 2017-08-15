@@ -331,8 +331,8 @@ endfunction
 " BUGFIX,PLATFORM,BUGFIX
 "
 
-if !exists("g:MetaComment_right_c")
-   let g:cauthor= "*"
+if !exists("g:cauthor")
+   let g:cauthor='SCDTABLET.(chunhua.chen@tcl.com)'
 endif
 
 fun! CompleteAuthorAnchor(findstart, base)
@@ -347,7 +347,6 @@ fun! CompleteAuthorAnchor(findstart, base)
   else
     " find months matching with "a:base"
     let l:curtime=strftime("%m/%d/%Y")
-    let g:cauthor='SCDTABLET.(chunhua.chen@tcl.com)'
     "[BUGFIX]-Add-BEGIN by TCTNB.WQF, 2012/7/7, reason
     let res = []
     for m in ['BUGFIX]', 'PLATFORM]', 'FEATURE]']
