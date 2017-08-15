@@ -352,7 +352,7 @@ fun! CompleteAuthorAnchor(findstart, base)
     let res = []
     for m in ['BUGFIX]', 'PLATFORM]', 'FEATURE]']
       if m =~ '^' . a:base
-        for suffix in ['Add', 'Mod', 'Del']
+        for suffix in ['-Add', '-Mod', '-Del']
 	      call add(res, m . suffix . '-BEGIN by ' . g:cauthor . ',' . l:curtime . ',' )
           call add(res, m . suffix . '-END by '. g:cauthor)
         endfor
