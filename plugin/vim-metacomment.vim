@@ -323,6 +323,45 @@ function! s:MetaComment(str)
 
 endfunction
 
+"[BUGFIX]-Add-BEGIN by TCTNB.WQF, 2012/7/7, reason
+"PR-xxxxx
+"[BUGFIX]-Add-END by TCTNB.WQF
+"FR-xxxxx
+" Add，Mod，Del
+" BUGFIX,PLATFORM,BUGFIX
+"
+
+if !exists("g:MetaComment_right_c")
+   let g:cauthor= "*"
+endif
+
+fun! CompleteAuthorAnchor(findstart, base)
+  if a:findstart
+    " locate the start of the word
+    let line = getline('.')
+    let start = col('.') - 1
+    while start > 0 && line[start - 1] =~ '\a'
+      let start -= 1
+    endwhile
+    return start
+  else
+    " find months matching with "a:base"
+    let l:curtime=strftime("%m/%d/%Y")
+    let g:cauthor='SCDTABLET.(chunhua.chen@tcl.com)'
+    "[BUGFIX]-Add-BEGIN by TCTNB.WQF, 2012/7/7, reason
+    let res = []
+    for m in ['BUGFIX]', 'PLATFORM]', 'FEATURE]']
+      if m =~ '^' . a:base
+        for suffix in ['Add', 'Mod', 'Del']
+	      call add(res, m . suffix . '-BEGIN by ' . g:cauthor . ',' . l:curtime . ',' )
+          call add(res, m . suffix . '-END by '. g:cauthor)
+        endfor
+      endif
+    endfor
+    return res
+  endif
+endfun
+set completefunc=CompleteAuthorAnchor
 
 " -------------------------------------------------------------------------- "
 "                                 Public API                                 "
