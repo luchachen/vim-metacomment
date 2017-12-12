@@ -414,6 +414,7 @@ function! s:MetaHeader(str)
    elseif ft == "cpp"
       "call s:MetaCommentCpp(a:str)
    elseif ft == "sh" || ft == "bash" || ft == "zsh" || ft == "ruby" || ft == "python" || ft == "conf"
+               \ || ft == "make"
        "call s:MetaCommentSh(a:str)
        let meta_s = "#"
        let meta_e = "#"
