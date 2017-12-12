@@ -551,13 +551,13 @@ set completefunc=CompleteAuthorAnchor
 
 command! -nargs=0 MetaHeader call s:MetaHeader(g:cheader)
 command! -nargs=1 MetaComment call s:MetaComment(<f-args>)
-command! -nargs=1 MetaCommentC call s:MetaCommentC(<f-args>)
-command! -nargs=1 MetaCommentCpp call s:MetaCommentCpp(<f-args>)
-command! -nargs=1 MetaCommentSh call s:MetaCommentSh(<f-args>)
-command! -nargs=1 MetaCommentAsm call s:MetaCommentAsm(<f-args>)
-command! -nargs=1 MetaCommentVim call s:MetaCommentVim(<f-args>)
-command! -nargs=1 MetaCommentVhdl call s:MetaCommentVhdl(<f-args>)
-command! -nargs=1 MetaCommentLaTeX call s:MetaCommentLaTeX(<f-args>)
-command! -nargs=1 MetaCommentHtml call s:MetaCommentHtml(<f-args>)
+"command! -nargs=1 MetaCommentC call s:MetaCommentC(<f-args>)
+"command! -nargs=1 MetaCommentCpp call s:MetaCommentCpp(<f-args>)
+"command! -nargs=1 MetaCommentSh call s:MetaCommentSh(<f-args>)
+"command! -nargs=1 MetaCommentAsm call s:MetaCommentAsm(<f-args>)
+"command! -nargs=1 MetaCommentVim call s:MetaCommentVim(<f-args>)
+"command! -nargs=1 MetaCommentVhdl call s:MetaCommentVhdl(<f-args>)
+"command! -nargs=1 MetaCommentLaTeX call s:MetaCommentLaTeX(<f-args>)
+"command! -nargs=1 MetaCommentHtml call s:MetaCommentHtml(<f-args>)
 
 " EOF
