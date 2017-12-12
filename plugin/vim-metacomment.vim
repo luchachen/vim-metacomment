@@ -213,6 +213,32 @@ function! StringWithWhiteSpaces(str)
    return left . a:str . right
 endfunction
 
+function! StringWithWhiteSpacesWidth(str, width)
+   let right = ""
+   let left = ""
+   let space = a:width
+   let len = strlen(a:str)
+   let leftspace = (space - len) / 2
+   let rightspace = leftspace
+   let c = 0
+
+   if (len % 2 != 0)
+      let leftspace += 1
+   endif
+
+   while c < rightspace
+      let right = right . " "
+      let c += 1
+   endwhile
+   let c = 0
+   while c < leftspace
+      let left = left . " "
+      let c += 1
+   endwhile
+
+   return left . a:str . right
+endfunction
+
 
 " -------------------------------------------------------------------------- "
 "                            MetaComment SubTypes                            "
@@ -300,6 +326,7 @@ function! s:MetaComment(str)
    let ft = &filetype
 
    if ft == "c" || ft == "edc" || ft == "js" || ft == "php" || ft == "objc" || ft == "objcpp" || ft == "rust"
+               \ || ft == "java"
       call s:MetaCommentC(a:str)
    elseif ft == "cpp"
       call s:MetaCommentCpp(a:str)
@@ -332,7 +359,58 @@ endfunction
 "
 
 if !exists("g:cauthor")
-   let g:cauthor='SCDTABLET.(chunhua.chen@tcl.com)'
+   let g:cauthor='R&D1.(chunhua.chen@tcl.com)'
+   "let g:cauthor='R&D1.(tbd@tbd)'
+   let s:cauthor =  substitute(g:cauthor, ".*(", "", "")
+   let s:cmail =  substitute(s:cauthor, ")", "", "")
+   let s:cauthor =  substitute(s:cauthor, "@.*", "", "")
+else
+   let s:cauthor =  substitute(g:cauthor, ".*(", "", "")
+   let s:cmail =  substitute(s:cauthor, ")", "", "")
+   let s:cauthor =  substitute(s:cauthor, "@.*", "", "")
+endif
+
+if !exists("g:ctask")
+   let g:ctask = "TBD"
+endif
+
+if !exists("g:cfeature")
+    let g:cfeature = "TBD"
+endif
+
+if !exists("g:cheader")
+   let g:cheader ="" . "
+               \Date: " . strftime("%m/%Y") . " \n
+               \                                PRESENTATION\n
+               \
+               \       Copyright 2017 TCL Communication Technology Holdings Limited.\n
+               \
+               \ This material is company confidential, cannot be reproduced in any form\n
+               \ without the written permission of TCL Communication Technology Holdings\n
+               \ Limited.\n
+               \\n
+               \\n
+               \  Author :  " . s:cauthor . "\n
+               \  Email  :  " . s:cmail . "\n
+               \  Role   :
+               \  Reference documents :\n
+               \  Comments :\n
+               \  File     :\n
+               \  Labels   :\n
+               \\n
+               \ --------------------------------------------------------------------------\n
+               \ ==========================================================================\n
+               \     Modifications on Features list / Changes Request / Problems Report\n
+               \ --------------------------------------------------------------------------\n
+               \    date   |        author        |         Key          |     comment\n
+               \ ----------|----------------------|----------------------|-----------------\n
+               \ " . "
+               \" . StringWithWhiteSpacesWidth(strftime('%d/%m/%Y'), 10) . "|
+               \" . StringWithWhiteSpacesWidth(s:cauthor, 22) . "|
+               \" . StringWithWhiteSpacesWidth("TASK " . g:ctask, 22) . "|
+               \" . StringWithWhiteSpacesWidth(g:cfeature, 17) . "\n
+               \ ----------|----------------------|----------------------|-----------------\n
+               \"
 endif
 
 fun! CompleteAuthorAnchor(findstart, base)
@@ -352,7 +430,7 @@ fun! CompleteAuthorAnchor(findstart, base)
     for m in ['BUGFIX]', 'PLATFORM]', 'FEATURE]']
       if m =~ '^' . a:base
         for suffix in ['-Add', '-Mod', '-Del']
-	      call add(res, m . suffix . '-BEGIN by ' . g:cauthor . ',' . l:curtime . ',' )
+	      call add(res, m . suffix . '-BEGIN by ' . g:cauthor . ',' . l:curtime . ',' . 'TASK-' . g:ctask)
           call add(res, m . suffix . '-END by '. g:cauthor)
         endfor
       endif
@@ -366,6 +444,7 @@ set completefunc=CompleteAuthorAnchor
 "                                 Public API                                 "
 " -------------------------------------------------------------------------- "
 
+command! -nargs=0 MetaHeader call s:MetaComment(g:cheader)
 command! -nargs=1 MetaComment call s:MetaComment(<f-args>)
 command! -nargs=1 MetaCommentC call s:MetaCommentC(<f-args>)
 command! -nargs=1 MetaCommentCpp call s:MetaCommentCpp(<f-args>)

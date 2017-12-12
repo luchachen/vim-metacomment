@@ -26,6 +26,7 @@ How to use it?
 In command mode, call:
 >
    :MetaComment Your wonderful comment
+   :MetaHeader
 <
 Then validates with ENTER. Easy! This command autodetects the filetype.
 There is a comment style different for some filetypes. This is in place for a better
@@ -55,6 +56,9 @@ How to configure it?
 
 Set the options below:
 >
+   let g:cauthor = "XX.(xxx@xxx.com)"
+   let g:ctask = "TBD"
+   let g:cfeature = "TBD"
    let g:MetaComment_header_[type] = "============================================================================*"
    let g:MetaComment_right_[type] = "*"
    let g:MetaComment_left_[type] = "*"
