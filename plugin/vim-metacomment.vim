@@ -1,4 +1,3 @@
-"
 " vim-metacomment.vim
 "
 "
@@ -183,6 +182,23 @@ if !exists("g:MetaComment_footer_jinja")
    let g:MetaComment_footer_jinja = "#############################################################################"
 endif
 
+" all (type {# #}
+if !exists("g:MetaComment_header_all")
+   let g:MetaComment_header_all = ""
+endif
+
+if !exists("g:MetaComment_right_all")
+   let g:MetaComment_right_all = "#"
+endif
+
+if !exists("g:MetaComment_left_all")
+   let g:MetaComment_left_all = "#"
+endif
+
+if !exists("g:MetaComment_footer_all")
+   let g:MetaComment_footer_all = ""
+endif
+
 " -------------------------------------------------------------------------- "
 "                                 Private API                                "
 " -------------------------------------------------------------------------- "
@@ -211,6 +227,41 @@ function! StringWithWhiteSpaces(str)
    endwhile
 
    return left . a:str . right
+endfunction
+
+function! MultiStringWithMeta(str,left, right) 
+   let content = ""
+   let linecon = ""
+   let right = ""
+   let left = a:left
+   let space = 76
+
+   if a:right == ''
+       let space = 0
+   else
+       let right = a:right
+   endif
+
+   let start = 0
+   let newstart = stridx(a:str, "\n", start)
+   while (newstart  > 0)
+       let linecon = strpart(a:str, start, newstart - start)
+       let len = strlen(linecon)
+       let rightspace = space - len
+       let c = 0
+
+       while c < rightspace
+           let right = " " . right
+           let c += 1
+       endwhile
+       let c = 0
+       let content = left . linecon . right . "\n"
+       exec "normal 0d$i" . content
+       let start = newstart + 1
+       let right = a:right
+       let newstart = stridx(a:str, "\n", start)
+   endwhile
+   "return content
 endfunction
 
 function! StringWithWhiteSpacesWidth(str, width)
@@ -350,6 +401,60 @@ function! s:MetaComment(str)
 
 endfunction
 
+function! s:MetaHeader(str)
+   let ft = &filetype
+   " default is C comment style
+   let meta_s = '/*'
+   let meta_e = ' */'
+   let meta_left = ' *'
+   let meta_right = ''
+   if ft == "c" || ft == "edc" || ft == "js" || ft == "php" || ft == "objc" || ft == "objcpp" || ft == "rust"
+               \ || ft == "java"
+       "call s:MetaCommentC(a:str)
+   elseif ft == "cpp"
+      "call s:MetaCommentCpp(a:str)
+   elseif ft == "sh" || ft == "bash" || ft == "zsh" || ft == "ruby" || ft == "python" || ft == "conf"
+       "call s:MetaCommentSh(a:str)
+       let meta_s = "#"
+       let meta_e = "#"
+       let meta_left = "#"
+       let meta_right = ""
+   elseif ft == "asm"
+      "call s:MetaCommentAsm(a:str)
+   elseif ft == "vim"
+      "call s:MetaCommentVim(a:str)
+       let meta_s = '"'
+       let meta_e = '"'
+       let meta_left = '"'
+       let meta_right = ''
+   elseif ft == "vhdl"
+      "call s:MetaCommentVhdl(a:str)
+   elseif ft == "tex" || ft == "mat"
+      "call s:MetaCommentLaTeX(a:str)
+   elseif ft == "html"
+      "call s:MetaCommentHtml(a:str)
+   elseif ft == "jinja"
+      "call s:MetaCommentJinja(a:str)
+   else
+      echoerr("Unimplemented filetype '" . ft . "'. Please report to jean@guyomarch.bzh or fix it yourself (but then please let me know)")
+   endif
+   exec "normal 0,0go"
+   exec "normal! O"
+   exec "normal! 0d$i" . meta_s
+   if g:MetaComment_header_all != ''
+       exec "normal! o"
+       exec "normal! 0d$i" . meta_left . g:MetaComment_header_all . meta_right
+   endif
+   exec "normal! o"
+   call MultiStringWithMeta(a:str, meta_left, meta_right)
+   if g:MetaComment_footer_all != ''
+       exec "normal! o"
+       exec "normal! 0d$i" . meta_left. g:MetaComment_footer_all . meta_right
+   endif
+   "exec "normal! o"
+   exec "normal! 0d$i" . meta_e
+endfunction
+
 "[BUGFIX]-Add-BEGIN by TCTNB.WQF, 2012/7/7, reason
 "PR-xxxxx
 "[BUGFIX]-Add-END by TCTNB.WQF
@@ -444,7 +549,7 @@ set completefunc=CompleteAuthorAnchor
 "                                 Public API                                 "
 " -------------------------------------------------------------------------- "
 
-command! -nargs=0 MetaHeader call s:MetaComment(g:cheader)
+command! -nargs=0 MetaHeader call s:MetaHeader(g:cheader)
 command! -nargs=1 MetaComment call s:MetaComment(<f-args>)
 command! -nargs=1 MetaCommentC call s:MetaCommentC(<f-args>)
 command! -nargs=1 MetaCommentCpp call s:MetaCommentCpp(<f-args>)
