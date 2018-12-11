@@ -27,6 +27,7 @@ In command mode, call:
 >
    :MetaComment Your wonderful comment
    :MetaHeader
+   :set completefunc=CompleteAuthorAnchor
 <
 Then validates with ENTER. Easy! This command autodetects the filetype.
 There is a comment style different for some filetypes. This is in place for a better

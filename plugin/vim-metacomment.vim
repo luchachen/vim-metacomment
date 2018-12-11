@@ -465,7 +465,7 @@ endfunction
 "
 
 if !exists("g:cauthor")
-   let g:cauthor='R&D1.(chunhua.chen@tcl.com)'
+   let g:cauthor='GCSSZ.R&D(chunhua.chen@tcl.com)'
    "let g:cauthor='R&D1.(tbd@tbd)'
    let s:cauthor =  substitute(g:cauthor, ".*(", "", "")
    let s:cmail =  substitute(s:cauthor, ")", "", "")
